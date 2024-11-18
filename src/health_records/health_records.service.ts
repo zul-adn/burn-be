@@ -25,7 +25,6 @@ export class HealthRecordsService {
     try {
       this.HealthRecordModel.find({ user_id })
         .then((datas) => {
-          console.log(datas);
           return datas;
         })
         .catch((e) => {

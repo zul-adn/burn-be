@@ -1,9 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { MasterServicesService } from './master_services.service';
 import { CreateMasterServiceDto } from './dto/create-master_service.dto';
 import { UpdateMasterServiceDto } from './dto/update-master_service.dto';
 
-@Controller('master-services')
+@Controller('services')
 export class MasterServicesController {
   constructor(private readonly masterServicesService: MasterServicesService) {}
 
@@ -23,7 +31,10 @@ export class MasterServicesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMasterServiceDto: UpdateMasterServiceDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateMasterServiceDto: UpdateMasterServiceDto,
+  ) {
     return this.masterServicesService.update(+id, updateMasterServiceDto);
   }
 
