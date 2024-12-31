@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { AuthLoginDto } from './dto/auth-login.dto';
 import { UsersService } from '../users/users.service';
 import { compare } from 'bcryptjs';
@@ -12,14 +12,17 @@ export class AuthService {
   ) {}
 
   async authenticate(data: AuthLoginDto) {
-    const { email, password } = data;
+    const { email } = data;
     const user = await this.userService.findOne({
       email,
     });
 
-    const authenticated = await compare(password, user.password);
+    const authenticated = await compare(data.password, user.password);
     if (!authenticated) {
-      throw new UnauthorizedException();
+      return {
+        status: HttpStatus.UNAUTHORIZED,
+        message: 'Authentication failed',
+      };
     }
 
     const tokenPayload = {
@@ -28,12 +31,15 @@ export class AuthService {
 
     const accessToken = await this.jwtService.signAsync(tokenPayload);
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...restUser } = user;
+
     return {
       status: HttpStatus.OK,
       data: {
-        accessToken: accessToken,
-        ...user,
+        ...restUser,
       },
+      accessToken: accessToken,
     };
   }
 }
