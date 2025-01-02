@@ -28,6 +28,7 @@
     "@nestjs/mongoose": "^10.1.0",
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/swagger": "^8.1.0",
     "bcryptjs": "^2.4.3",
     "class-validator": "^0.14.1",
     "mongoose": "^8.8.1",
@@ -78,6 +79,7 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "resolutions": { "string-width": "4.2.3" }
   }
 }
